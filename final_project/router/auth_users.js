@@ -1,24 +1,24 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
+const express = require("express");
+const jwt = require("jsonwebtoken");
 let books = require("./booksdb.js");
 const regd_users = express.Router();
 
 let users = [];
 
+//returns boolean
 const isValid = (username) => {
   return users.some((user) => user.username === username);
 };
 
-const authenticatedUser = (username,password)=>{ //returns boolean
-//write code to check if username and password match the one we have in records.
+//returns boolean
+const authenticatedUser = (username, password) => {
   return users.some(
     (user) => user.username === username && user.password === password
   );
 };
 
-//only registered users can login
-regd_users.post("/login", (req,res) => {
-  //Write your code here testing
+// /customer/login
+regd_users.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -36,8 +36,8 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
+// /customer/auth/:isbn
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
   const user = req.session.authorization.username;
   const review = req.body.review; // string
   const isbn = req.params.isbn;
